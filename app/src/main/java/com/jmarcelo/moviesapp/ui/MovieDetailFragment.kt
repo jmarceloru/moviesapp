@@ -9,7 +9,7 @@ import com.jmarcelo.moviesapp.databinding.FragmentMovieDetailBinding
 
 
 class MovieDetailFragment : Fragment() {
-    lateinit var binding: FragmentMovieDetailBinding
+    private lateinit var binding: FragmentMovieDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

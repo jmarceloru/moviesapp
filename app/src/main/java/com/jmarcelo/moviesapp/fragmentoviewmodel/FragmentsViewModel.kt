@@ -13,6 +13,4 @@ class FragmentsViewModel : ViewModel() {
         user.value = texto
     }
 
-
-
 }

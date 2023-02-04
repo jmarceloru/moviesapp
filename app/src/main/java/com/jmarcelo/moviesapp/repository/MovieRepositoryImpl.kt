@@ -1,6 +1,7 @@
 package com.jmarcelo.moviesapp.repository
 
 import com.jmarcelo.moviesapp.data.local.LocalMovieDataSource
+import com.jmarcelo.moviesapp.data.model.Movie
 import com.jmarcelo.moviesapp.data.model.MovieList
 import com.jmarcelo.moviesapp.data.model.toMovieEntity
 import com.jmarcelo.moviesapp.data.remote.RemoteMovieDataSource
@@ -10,7 +11,7 @@ class MovieRepositoryImpl(
     private val localMovieDataSource: LocalMovieDataSource
 ) : MovieRepository {
 
-    override suspend fun getUpcomingMovies(): MovieList{
+    override suspend fun getUpcomingMovies(): MovieList {
         remoteMovieDataSource.getUpcomingMovies().results.forEach {
             localMovieDataSource.saveMovie(it.toMovieEntity("upcomming"))
         }

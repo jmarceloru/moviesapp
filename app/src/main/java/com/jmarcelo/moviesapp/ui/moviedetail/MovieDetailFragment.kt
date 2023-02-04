@@ -41,7 +41,7 @@ class MovieDetailFragment : Fragment() {
         binding.txtOverview.text = args.overview
         binding.txtLanguaje.text = "${getText(R.string.str_language)} ${args.language} "
         binding.txtRating.text ="${args.voteAverage}(${args.voteCount} ${getText(R.string.str_reviews)})"
-        binding.txtRelease.text = "${args.releaseDate} ${getText(R.string.str_released)}"
+        binding.txtRelease.text = "${getText(R.string.str_released)} ${args.releaseDate}"
 
         binding.imgMovie.setOnClickListener {
             val action = MovieDetailFragmentDirections.actionMovieDetailFragmentToMovieImageScreenFragment(

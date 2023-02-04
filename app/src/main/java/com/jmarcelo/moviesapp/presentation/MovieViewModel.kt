@@ -13,7 +13,7 @@ class MovieViewModel(private val repo: MovieRepository): ViewModel() {
         emit(Result.Loading())
         try {
             //anidamos llamadas al servidor
-            emit(Result.Success(Triple(repo.getUpcomingMovies(),repo.getTopRatedMovies(),repo.getPopularMovies())))
+           emit(Result.Success(Triple(repo.getUpcomingMovies(),repo.getTopRatedMovies(),repo.getPopularMovies())))
         }catch (e: Exception){
             emit(Result.Failure(e))
         }

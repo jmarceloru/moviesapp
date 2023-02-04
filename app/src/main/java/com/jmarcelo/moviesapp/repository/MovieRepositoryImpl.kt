@@ -1,13 +1,33 @@
 package com.jmarcelo.moviesapp.repository
 
+import com.jmarcelo.moviesapp.data.local.LocalMovieDataSource
 import com.jmarcelo.moviesapp.data.model.MovieList
-import com.jmarcelo.moviesapp.data.remote.MovieDataSource
+import com.jmarcelo.moviesapp.data.model.toMovieEntity
+import com.jmarcelo.moviesapp.data.remote.RemoteMovieDataSource
 
-class MovieRepositoryImpl(private val movieDataSource: MovieDataSource):MovieRepository {
+class MovieRepositoryImpl(
+    private val remoteMovieDataSource: RemoteMovieDataSource,
+    private val localMovieDataSource: LocalMovieDataSource
+) : MovieRepository {
 
-    override suspend fun getUpcomingMovies(): MovieList = movieDataSource.getUpcomingMovies()
+    override suspend fun getUpcomingMovies(): MovieList{
+        remoteMovieDataSource.getUpcomingMovies().results.forEach {
+            localMovieDataSource.saveMovie(it.toMovieEntity("upcomming"))
+        }
+        return localMovieDataSource.getUpcomingMovies()
+    }
 
-    override suspend fun getTopRatedMovies(): MovieList = movieDataSource.getTopRatedMovies()
+    override suspend fun getTopRatedMovies(): MovieList {
+        remoteMovieDataSource.getTopRatedMovies().results.forEach {
+            localMovieDataSource.saveMovie(it.toMovieEntity("toprated"))
+        }
+        return localMovieDataSource.getTopRatedMovies()
+    }
 
-    override suspend fun getPopularMovies(): MovieList = movieDataSource.getPopularMovies()
+    override suspend fun getPopularMovies(): MovieList {
+        remoteMovieDataSource.getPopularMovies().results.forEach {
+            localMovieDataSource.saveMovie(it.toMovieEntity("popular"))
+        }
+        return localMovieDataSource.getPopularMovies()
+    }
 }

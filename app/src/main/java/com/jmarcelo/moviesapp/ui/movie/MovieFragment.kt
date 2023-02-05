@@ -20,6 +20,7 @@ import com.jmarcelo.moviesapp.presentation.MovieViewModelFactory
 import com.jmarcelo.moviesapp.repository.MovieRepositoryImpl
 import com.jmarcelo.moviesapp.repository.RetrofitClient
 import com.jmarcelo.moviesapp.ui.movie.adapter.*
+import com.jmarcelo.moviesapp.usecase.GetMoviesUseCase
 
 class MovieFragment : Fragment(), OnMovieClickListener {
 
@@ -27,9 +28,11 @@ class MovieFragment : Fragment(), OnMovieClickListener {
     private lateinit var binding: FragmentMovieBinding
     private val movieViewModel: MovieViewModel by viewModels<MovieViewModel> {
         MovieViewModelFactory(
-            MovieRepositoryImpl(
-                RemoteMovieDataSource(RetrofitClient.webService),
-                LocalMovieDataSource(AppDataBase.getDatabase(requireContext()).movieDao())
+            GetMoviesUseCase(
+                MovieRepositoryImpl(
+                    RemoteMovieDataSource(RetrofitClient.webService),
+                    LocalMovieDataSource(AppDataBase.getDatabase(requireContext()).movieDao())
+                )
             )
         )
     }
@@ -51,7 +54,7 @@ class MovieFragment : Fragment(), OnMovieClickListener {
             when (result) {
                 is Result.Failure -> {
                     binding.progressBar.visibility = View.GONE
-                    Log.d("BUG",result.exception.toString())
+                    Log.d("BUG", result.exception.toString())
                 }
                 is Result.Loading -> {
                     binding.progressBar.visibility = View.VISIBLE
@@ -86,6 +89,7 @@ class MovieFragment : Fragment(), OnMovieClickListener {
                             )
                         )
                     }
+                    Log.d("ORIGEN",result.data.first.message)
                     binding.rvMovies.adapter = concatAdapter
                     binding.progressBar.visibility = View.GONE
                 }

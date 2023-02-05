@@ -1,9 +1,8 @@
 package com.jmarcelo.moviesapp.repository
 
 import com.jmarcelo.moviesapp.data.local.LocalMovieDataSource
-import com.jmarcelo.moviesapp.data.model.Movie
 import com.jmarcelo.moviesapp.data.model.MovieList
-import com.jmarcelo.moviesapp.data.model.toMovieEntity
+import com.jmarcelo.moviesapp.data.modeldatabase.MovieEntity
 import com.jmarcelo.moviesapp.data.remote.RemoteMovieDataSource
 
 class MovieRepositoryImpl(
@@ -11,24 +10,26 @@ class MovieRepositoryImpl(
     private val localMovieDataSource: LocalMovieDataSource
 ) : MovieRepository {
 
-    override suspend fun getUpcomingMovies(): MovieList {
-        remoteMovieDataSource.getUpcomingMovies().results.forEach {
-            localMovieDataSource.saveMovie(it.toMovieEntity("upcomming"))
-        }
-        return localMovieDataSource.getUpcomingMovies()
+    override suspend fun getUpcomingMovies(): Result<MovieList> {
+        return remoteMovieDataSource.getUpcomingMovies()
     }
 
-    override suspend fun getTopRatedMovies(): MovieList {
-        remoteMovieDataSource.getTopRatedMovies().results.forEach {
-            localMovieDataSource.saveMovie(it.toMovieEntity("toprated"))
-        }
-        return localMovieDataSource.getTopRatedMovies()
+    override suspend fun getTopRatedMovies(): Result<MovieList> {
+        return remoteMovieDataSource.getTopRatedMovies()
     }
 
-    override suspend fun getPopularMovies(): MovieList {
-        remoteMovieDataSource.getPopularMovies().results.forEach {
-            localMovieDataSource.saveMovie(it.toMovieEntity("popular"))
-        }
-        return localMovieDataSource.getPopularMovies()
+    override suspend fun getPopularMovies(): Result<MovieList> {
+        return remoteMovieDataSource.getPopularMovies()
     }
+
+    //esto es lo correcto ? se hace con el fin de que el caso de uso solo tenga dependencia con el repositorio
+    // y no conozca el origen de los datos
+    override suspend fun getUpcomingMoviesLocal(): MovieList = localMovieDataSource.getUpcomingMovies()
+
+    override suspend fun getTopRatedMoviesLocal(): MovieList = localMovieDataSource.getTopRatedMovies()
+
+    override suspend fun getPopularMoviesLocal(): MovieList = localMovieDataSource.getPopularMovies()
+
+    override suspend fun saveMovie(movie: MovieEntity) = localMovieDataSource.saveMovie(movie)
+
 }

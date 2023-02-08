@@ -8,7 +8,7 @@ import com.jmarcelo.moviesapp.data.remote.RemoteMovieDataSource
 class MovieRepositoryImpl(
     private val remoteMovieDataSource: RemoteMovieDataSource,
     private val localMovieDataSource: LocalMovieDataSource
-) : MovieRepository {
+) : MovieRepository,MovieRepositoryLocal {
 
     override suspend fun getUpcomingMovies(): Result<MovieList> {
         return remoteMovieDataSource.getUpcomingMovies()

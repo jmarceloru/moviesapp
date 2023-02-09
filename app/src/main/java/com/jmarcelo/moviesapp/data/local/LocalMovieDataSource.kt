@@ -22,4 +22,8 @@ class LocalMovieDataSource(private val movieDao: MovieDao) {
         movieDao.insertMovie(movie)
     }
 
+    suspend fun saveAllMovie(movieList: List<MovieEntity>){
+        movieDao.insertAllMovie(movieList)
+    }
+
 }

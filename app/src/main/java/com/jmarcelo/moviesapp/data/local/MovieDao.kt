@@ -12,4 +12,7 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE) // en caso de conflicto reemplaza el registro
     suspend fun insertMovie(movie: MovieEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAllMovie(movisList: List<MovieEntity>)
+
 }

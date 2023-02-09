@@ -8,4 +8,5 @@ interface MovieRepositoryLocal {
     suspend fun getTopRatedMoviesLocal(): MovieList
     suspend fun getPopularMoviesLocal(): MovieList
     suspend fun saveMovie(movie: MovieEntity)
+    suspend fun saveAllMovie(movieList: List<MovieEntity>)
 }

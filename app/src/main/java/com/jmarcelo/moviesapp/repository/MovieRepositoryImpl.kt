@@ -32,4 +32,7 @@ class MovieRepositoryImpl(
 
     override suspend fun saveMovie(movie: MovieEntity) = localMovieDataSource.saveMovie(movie)
 
+    override suspend fun saveAllMovie(movieList: List<MovieEntity>) = localMovieDataSource.saveAllMovie(movieList)
+
+
 }

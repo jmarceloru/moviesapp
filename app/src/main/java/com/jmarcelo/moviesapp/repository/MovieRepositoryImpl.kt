@@ -4,8 +4,9 @@ import com.jmarcelo.moviesapp.data.local.LocalMovieDataSource
 import com.jmarcelo.moviesapp.data.model.MovieList
 import com.jmarcelo.moviesapp.data.modeldatabase.MovieEntity
 import com.jmarcelo.moviesapp.data.remote.RemoteMovieDataSource
+import javax.inject.Inject
 
-class MovieRepositoryImpl(
+class MovieRepositoryImpl @Inject constructor(
     private val remoteMovieDataSource: RemoteMovieDataSource,
     private val localMovieDataSource: LocalMovieDataSource
 ) : MovieRepository,MovieRepositoryLocal {
@@ -22,8 +23,6 @@ class MovieRepositoryImpl(
         return remoteMovieDataSource.getPopularMovies()
     }
 
-    //esto es lo correcto ? se hace con el fin de que el caso de uso solo tenga dependencia con el repositorio
-    // y no conozca el origen de los datos
     override suspend fun getUpcomingMoviesLocal(): MovieList = localMovieDataSource.getUpcomingMovies()
 
     override suspend fun getTopRatedMoviesLocal(): MovieList = localMovieDataSource.getTopRatedMovies()
@@ -34,5 +33,8 @@ class MovieRepositoryImpl(
 
     override suspend fun saveAllMovie(movieList: List<MovieEntity>) = localMovieDataSource.saveAllMovie(movieList)
 
+    override suspend fun delete(movie: MovieEntity)  = localMovieDataSource.deleteMovie(movie)
+
+    override suspend fun deleteMovieByIdAndType(id: Int, type: String) = localMovieDataSource.deleteMovieByIdAndType(id,type)
 
 }

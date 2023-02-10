@@ -3,8 +3,9 @@ package com.jmarcelo.moviesapp.usecase
 import com.jmarcelo.moviesapp.data.model.MovieListModel
 import com.jmarcelo.moviesapp.data.model.toMovieEntity
 import com.jmarcelo.moviesapp.repository.MovieRepositoryImpl
+import javax.inject.Inject
 
-class GetMoviesUseCase(
+class GetMoviesUseCase @Inject constructor(
     private val movieRepositoryImpl: MovieRepositoryImpl,
 ) {
 
@@ -19,7 +20,10 @@ class GetMoviesUseCase(
                 "Cargado de internet"
             )
         }.onFailure {
-            movieListModel = MovieListModel(movieRepositoryImpl.getUpcomingMoviesLocal().results,"Cargado de Room")
+            movieListModel = MovieListModel(
+                movieRepositoryImpl.getUpcomingMoviesLocal().results,
+                "Cargado de Room"
+            )
         }
         return movieListModel
     }
@@ -35,7 +39,10 @@ class GetMoviesUseCase(
                 "Cargado de internet"
             )
         }.onFailure {
-            movieListModel = MovieListModel(movieRepositoryImpl.getTopRatedMoviesLocal().results,"Cargado de Room")
+            movieListModel = MovieListModel(
+                movieRepositoryImpl.getTopRatedMoviesLocal().results,
+                "Cargado de Room"
+            )
         }
         return movieListModel
     }
@@ -51,7 +58,10 @@ class GetMoviesUseCase(
                 "Cargado de internet"
             )
         }.onFailure {
-            movieListModel = MovieListModel(movieRepositoryImpl.getPopularMoviesLocal().results,"Cargado de Room")
+            movieListModel = MovieListModel(
+                movieRepositoryImpl.getPopularMoviesLocal().results,
+                "Cargado de Room"
+            )
         }
         return movieListModel
     }

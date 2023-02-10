@@ -10,32 +10,18 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
 import com.jmarcelo.moviesapp.core.Result
-import com.jmarcelo.moviesapp.data.local.AppDataBase
-import com.jmarcelo.moviesapp.data.local.LocalMovieDataSource
 import com.jmarcelo.moviesapp.data.model.Movie
-import com.jmarcelo.moviesapp.data.remote.RemoteMovieDataSource
 import com.jmarcelo.moviesapp.databinding.FragmentMovieBinding
 import com.jmarcelo.moviesapp.presentation.MovieViewModel
-import com.jmarcelo.moviesapp.presentation.MovieViewModelFactory
-import com.jmarcelo.moviesapp.repository.MovieRepositoryImpl
-import com.jmarcelo.moviesapp.repository.RetrofitClient
 import com.jmarcelo.moviesapp.ui.movie.adapter.*
-import com.jmarcelo.moviesapp.usecase.GetMoviesUseCase
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MovieFragment : Fragment(), OnMovieClickListener {
 
     private lateinit var concatAdapter: ConcatAdapter
     private lateinit var binding: FragmentMovieBinding
-    private val movieViewModel: MovieViewModel by viewModels<MovieViewModel> {
-        MovieViewModelFactory(
-            GetMoviesUseCase(
-                MovieRepositoryImpl(
-                    RemoteMovieDataSource(RetrofitClient.webService),
-                    LocalMovieDataSource(AppDataBase.getDatabase(requireContext()).movieDao())
-                )
-            )
-        )
-    }
+    private val movieViewModel: MovieViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

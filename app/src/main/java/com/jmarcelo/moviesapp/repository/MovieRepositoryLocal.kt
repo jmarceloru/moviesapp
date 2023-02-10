@@ -9,4 +9,6 @@ interface MovieRepositoryLocal {
     suspend fun getPopularMoviesLocal(): MovieList
     suspend fun saveMovie(movie: MovieEntity)
     suspend fun saveAllMovie(movieList: List<MovieEntity>)
+    suspend fun delete(movieList: MovieEntity)
+    suspend fun deleteMovieByIdAndType(id: Int,type:String)
 }

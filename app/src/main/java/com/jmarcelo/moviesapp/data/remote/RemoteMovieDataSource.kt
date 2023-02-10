@@ -5,8 +5,9 @@ import com.jmarcelo.moviesapp.commons.SettingsUtils
 import com.jmarcelo.moviesapp.data.model.MovieList
 import com.jmarcelo.moviesapp.repository.WebService
 import retrofit2.Response
+import javax.inject.Inject
 
-class RemoteMovieDataSource(private val webService: WebService) {
+class RemoteMovieDataSource @Inject constructor (private val webService: WebService) {
 
     suspend fun getUpcomingMovies(): Result<MovieList>{
         val response:Response<MovieList>

@@ -15,4 +15,10 @@ interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllMovie(movisList: List<MovieEntity>)
 
+    @Delete
+    suspend fun deleteMovie(movisList: MovieEntity)
+
+    @Query("DELETE FROM movieentity where id = :id and movie_type = :type")
+    suspend fun deleteMovieByIdAndType(id:Int,type:String)
+
 }

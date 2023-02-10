@@ -2,13 +2,12 @@ package com.jmarcelo.moviesapp.data.modeldatabase
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.jmarcelo.moviesapp.data.model.Movie
 import com.jmarcelo.moviesapp.data.model.MovieList
 
-@Entity
+@Entity(tableName = "movieentity",primaryKeys = ["id", "movie_type" ])
 data class MovieEntity(
-    @PrimaryKey val id: Int = -1,
+    @ColumnInfo(name = "id") val id: Int = -1,
     @ColumnInfo(name = "adult") val adult: Boolean = false,
     // @ColumnInfo(name = "genere_ids") val genere_ids: List<Int>,
     @ColumnInfo(name = "backdrop_path") val backdrop_path: String? = "",
